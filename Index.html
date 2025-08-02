@@ -1,224 +1,658 @@
-<!doctype html>
+a<div style="text-align: center; padding: 20px;">
+  <h2 style="color: inherit;">📢 Aviso Importante</h2>
+  <p style="font-size: 18px; color: inherit;">
+    Todos os livros deste site são <strong>gratuitos</strong> para download.<br>
+    Para baixar, é necessário <strong>ver um anúncio completo</strong>.<br>
+    Isso ajuda a manter o site no ar e gratuito para todos.
+  </p>
+
+  <a href="https://seu-link-aqui.com" target="_blank" style="display: flex; justify-content: center; margin-top: 20px;">
+    <img src="https://blogger.googleusercontent.com/img/a/AVvXsEjrG8PmQ72Z5TYR3DujsuR-LtrJVM30tToWHikZaDvFb74PrwMNxpYQvWoseCh3RrGCpcERQsCCouaaQ0sdvQNA8444L867C397cKBAHXcodjaJVt_6vc-u7QMFQBQfdBzoF9lFiLr4nG1LqpBmPqF2a8LzBdKjBb3rvPBzTnl4m1O-N7QWyn5P0NUkEVQl" alt="Capa do Livro" style="width: 400px; height: auto; border-radius: 10px;">
+  </a>
+</div>
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Biblioteca Virtual</title>
-  
-<!-- SCRIPT DO ADSENSE - apenas uma vez -->
- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4242601210203985"
-     crossorigin="anonymous"></script>
-   
   <style>
-    * { box-sizing: border-box; }
-    html, body {
-      margin: 0; padding: 0;
-      width: 100%; height: 100%;
+    :root {
+      --cor-fundo-claro: #f5f5f5;
+      --cor-texto-claro: #222;
+      --cor-fundo-escuro: #121212;
+      --cor-texto-escuro: #eee;
+      --cor-acento: #d32f2f;
+    }
+    body {
+      margin: 0;
       font-family: Arial, sans-serif;
-      background-color: #111; color: #fff;
+      background-color: var(--cor-fundo-escuro);
+      color: var(--cor-texto-escuro);
+      transition: background-color 0.3s, color 0.3s;
     }
-    .conteudo-principal {
-      width: 100%; max-width: 1200px;
-      margin: 0 auto;
-      padding: 20px 10px 40px 10px;
-      margin-top: 0px;
+    body.light {
+      background-color: var(--cor-fundo-claro);
+      color: var(--cor-texto-claro);
     }
-    h1 {
-      text-align: center;
-      color: #f1c40f;
-      margin-top: 2px;
-    }
-    .search-bar {
+    header {
+      background-color: var(--cor-acento);
+      color: white;
+      padding: 15px 20px;
       display: flex;
-      justify-content: center;
-      margin: 30px auto;
-      max-width: 500px;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
     }
-    .search-bar input[type="text"] {
-      flex: 1;
-      padding: 12px;
-      border: 1px solid #ccc;
-      border-radius: 5px 0 0 5px;
-      font-size: 16px;
-      color: #000;
+    header h1 {
+      margin: 0;
+      font-size: 1.6rem;
     }
-    .search-bar button {
-      padding: 12px 16px;
-      background-color: #f1c40f;
-      color: #111;
+    #btnTema {
+      background: none;
       border: none;
-      border-radius: 0 5px 5px 0;
+      font-size: 1.8rem;
       cursor: pointer;
+      color: white;
     }
-    h2 {
-      margin-top: 40px;
-      color: #f1c40f;
+    #searchBar {
+      margin-top: 10px;
+      width: 100%;
+      max-width: 300px;
+      position: relative;
     }
-    .carousel {
+    #searchBar input {
+      width: 100%;
+      padding: 8px 35px 8px 10px;
+      border-radius: 4px;
+      border: none;
+      font-size: 1rem;
+      background-color: white;
+      color: black;
+    }
+    body.light #searchBar input {
+      background-color: white;
+      color: black;
+    }
+    #searchBar svg {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 18px;
+      height: 18px;
+      fill: white;
+      pointer-events: none;
+      transition: fill 0.3s;
+    }
+    body.light #searchBar svg {
+      fill: #555;
+    }
+    main {
+      max-width: 100%;
+      margin: 20px auto;
+      padding: 0 15px;
+    }
+    .carrossel {
+      margin-bottom: 40px;
+    }
+    .carrossel h2 {
+      margin-bottom: 10px;
+      font-size: 1.4rem;
+      color: var(--cor-acento);
+    }
+    .livros-container {
       display: flex;
       overflow-x: auto;
-      gap: 12px;
       scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch;
+      gap: 12px;
       padding-bottom: 10px;
+      scrollbar-width: none;
     }
-    .carousel::-webkit-scrollbar {
+    .livros-container::-webkit-scrollbar {
       display: none;
     }
-    .card {
-      flex: 0 0 200px;
-      background: #222;
-      border-radius: 10px;
-      padding: 15px;
+    .livro {
+      flex: 0 0 auto;
+      width: 160px;
+      background-color: #fff;
+      border-radius: 6px;
+      padding: 10px;
+      text-align: center;
+      color: #000;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
       scroll-snap-align: start;
-      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
-    .card img {
-      width: 100%; height: auto;
-      border-radius: 5px;
-      margin-bottom: 10px;
+    body.dark .livro {
+      background-color: #222;
+      color: #eee;
     }
-    .card h3 {
-      font-size: 18px; color: #f1c40f;
+    .livro img {
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
+    }
+    .livro p {
+      font-size: 1rem;
+      font-weight: bold;
       margin: 10px 0 5px;
     }
-    .author {
-      font-size: 14px;
+    .autor {
+      font-size: 0.9rem;
       font-style: italic;
-      color: #aaa;
+      margin-bottom: 5px;
     }
-    .card p {
-      font-size: 14px;
-      color: #ddd;
-    }
-    .btn-anuncio, .btn-download {
-      background-color: #e67e22;
+    .btn-baixar {
+      background-color: var(--cor-acento);
       color: white;
-      padding: 10px 15px;
-      font-size: 14px;
       border: none;
-      border-radius: 5px;
+      padding: 8px 12px;
+      font-size: 0.9rem;
+      margin-top: auto;
       cursor: pointer;
-      margin-top: 10px;
-      display: block;
-      text-align: center;
+      border-radius: 4px;
+      align-self: center;
     }
-    .btn-download { background-color: #1abc9c; }
-    .ad-container {
+    .anuncio {
       display: none;
-      margin: 10px 0;
-      padding: 10px;
-      background: #000;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #444;
+      padding: 20px;
+      color: white;
       text-align: center;
-      border: 1px solid #444;
+      border-radius: 8px;
+      font-size: 1.2rem;
+      max-width: 90%;
+      z-index: 1000;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
     }
-    .ads-topo, .ads-entre, .ads-footer {
-      text-align: center;
-      margin: 20px auto;
-      padding: 10px;
-      background-color: #222;
-      border: 1px dashed #f1c40f;
-      color: #f1c40f;
+    /* Estilo para o container do anúncio do AdSense */
+    .anuncio-ad {
+      margin: 15px 0;
+      /* centralizar */
+      display: flex;
+      justify-content: center;
+    }
+    footer {
+      max-width: 960px;
+      margin: 40px auto 80px;
+      padding: 0 15px;
+      color: inherit;
     }
   </style>
-  <script>
-    function mostrarAnuncio(botao) {
-      const card = botao.parentElement;
-      const adContainer = card.querySelector('.ad-container');
-      botao.style.display = 'none';
-      adContainer.style.display = 'block';
-
-      const ins = document.createElement('ins');
-      ins.className = 'adsbygoogle';
-      ins.style.display = 'block';
-      ins.setAttribute('data-ad-client', 'ca-pub-XXXXXXXXXXXX');
-      ins.setAttribute('data-ad-slot', 'DOWNLOADAD12345');
-      ins.setAttribute('data-ad-format', 'auto');
-      ins.setAttribute('data-full-width-responsive', 'true');
-      adContainer.appendChild(ins);
-
-      const script = document.createElement('script');
-      script.innerHTML = '(adsbygoogle = window.adsbygoogle || []).push({});';
-      adContainer.appendChild(script);
-
-      const aviso = document.createElement('div');
-      aviso.style.color = 'white';
-      aviso.style.marginTop = '10px';
-      aviso.textContent = '⏳ Aguardando anúncio terminar...';
-      adContainer.appendChild(aviso);
-
-      setTimeout(() => {
-        const botaoDownload = document.createElement('a');
-        botaoDownload.href = 'https://seusite.com/arquivo.epub';
-        botaoDownload.textContent = '📥 Baixar EPUB';
-        botaoDownload.className = 'btn-download';
-        botaoDownload.target = '_blank';
-        adContainer.appendChild(botaoDownload);
-      }, 5000);
-    }
-
-    function pesquisar() {
-      const input = document.getElementById("searchInput").value.toLowerCase();
-      const cards = document.querySelectorAll(".card");
-      cards.forEach(card => {
-        const titulo = card.querySelector("h3").textContent.toLowerCase();
-        const autor = card.querySelector(".author").textContent.toLowerCase();
-        const sinopse = card.querySelector("p").textContent.toLowerCase();
-        card.style.display = (titulo.includes(input) || autor.includes(input) || sinopse.includes(input)) ? "block" : "none";
-      });
-    }
-
-    document.addEventListener("DOMContentLoaded", function () {
-      document.getElementById("searchInput").addEventListener("input", pesquisar);
-    });
-  </script>
+  <!-- Meta tag do Google AdSense -->
+  <meta name="google-adsense-account" content="ca-pub-9401753457422207">
+  
+  <!-- Script do Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9401753457422207"
+     crossorigin="anonymous"></script>
 </head>
 <body>
-  <div class="conteudo-principal">
+  <header>
     <h1>Biblioteca Virtual</h1>
-    <div class="search-bar">
-      <input type="text" id="searchInput" placeholder="Pesquisar livros..." />
-      <button onclick="pesquisar()">🔍</button>
+    <button id="btnTema" aria-label="Alternar tema">🌙</button>
+    <div id="searchBar">
+      <input type="text" id="pesquisa" placeholder="Pesquisar..." onkeyup="pesquisarLivros()">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 2a8 8 0 105.293 14.293l4.707 4.707-1.414 1.414-4.707-4.707A8 8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12z"/></svg>
     </div>
+  </header>
 
-    <!-- Categorias anteriores serão reintegradas aqui -->
-    <!-- Você pode colar seu conteúdo completo de cards aqui -->
+  <main>
+    <section class="carrossel">
+      <h2>Livros em destaque</h2>
+      <div class="livros-container">
+              <div class="livros-container">
+        <div class="livro">
+          <img src="https://blogger.googleusercontent.com/img/a/AVvXsEgdtdlnjrGUX8HpRmLpus2uEkjQtBqhtBX6HSMJnqkWjxhkTx46LHtqdKm2upx9KFlEeiclkn-uUlPmiuTl5cdknQdOOeBJNWGmrlqpzcHxj59vM-TxOqbbLWItVoMtDrCQkznZrTiJdlmW8ufz50KN2nyvwBH5qigG81i7VTYUotX6GEBKOODj4f1aLyCX" alt="Capa do livro">
+          <p>Nunca Minta </p>
+          <div class="autor">Freida Mcfadden</div>
+          <div class="autor">A sinopse detalha que Tricia e Ethan, em busca de sua casa ideal, encontram uma mansão que pertencia à Dra. Hale, uma psiquiatra renomada que sumiu sem deixar rastros. Uma tempestade de neve os impede de sair e, enquanto esperam o tempo melhorar, Tricia encontra gravações de sessões da Dra. Hale com seus pacientes na mansão. Ao ouvir as fitas, Tricia começa a desvendar um mistério envolvendo a Dra. Hale, seus pacientes e os segredos que a casa parece guardar. A trama se desenvolve entre o presente, onde Tricia e Ethan estão presos, e o passado, revelado pelas fitas, com reviravoltas e revelações que prendem o leitor. </div>
+          <button class="btn-baixar" onclick="mostrarAnuncio(this, 'https://drive.google.com/file/d/1j4pfuDaeZvq9Y5msLuD4qXdb87N9yECy/view?usp=drivesdk')">Baixar</button>
+        </div>
+                
+                
+        <div class="livro">
+          <img src="https://blogger.googleusercontent.com/img/a/AVvXsEi1mX1LZBtvk7--hNnhbawXS9awKrBt96FAJpwLYTpg2qYtcrqm6DwJX0pT4PPhLSg2wJE5HJ6_1jRaHVZcGkeqhx6e-smeTsSsMu9fSJXuVgoJSrujdo_YfeusbeTRD9sHOgbx8OjYaF7LGoH0NA4W8p5l6Hejkh0MGujym6QqXvMkV89IJmJELU3UalzE
+            " alt="Capa do livro">
+          <p>A Empregada</p>
+          <div class="autor">Freida Mcfadden</div>
+          <div class="autor">Todos os dias, Millie limpa a casa de Nina e Andrew Winchester de cima a baixo. Pega a filha deles na escola. Prepara refeições deliciosas para a família toda antes de poder se recolher e enfim comer o próprio jantar, sozinha em seu quarto minúsculo e claustrofóbico no sótão.
 
-    <!-- Exemplo de card mantido -->
-    <h2>Talvez você goste</h2>
-    <div class="carousel">
-      <div class="card">
-        <img src="https://via.placeholder.com/200x300?text=Orgulho+e+Preconceito" alt="Capa Orgulho e Preconceito" />
-        <h3>Orgulho e Preconceito</h3>
-        <div class="author">Jane Austen</div>
-        <p>Um clássico sobre amor, classe e preconceito.</p>
-        <button class="btn-anuncio" onclick="mostrarAnuncio(this)">🎬 Assistir anúncio para baixar</button>
-        <div class="ad-container"></div>
+Quando Nina passa a sujar todos os cômodos de propósito só para assisti-la limpar, Millie tenta não perder a cabeça. Quando ela conta mentiras perturbadoras sobre a própria filha e tortura psicologicamente o marido, que parece mais e mais fragilizado, Millie tenta ignorar.
+
+Afinal, com seu passado problemático, ela tem mais é que agradecer...</div>
+          <button class="btn-baixar" onclick="mostrarAnuncio(this, 'https://drive.google.com/file/d/1j4pfuDaeZvq9Y5msLuD4qXdb87N9yECy/view?usp=drivesdk')">Baixar</button>
+        </div>
+           
+            
+                <div class="livro">
+          <img src="https://blogger.googleusercontent.com/img/a/AVvXsEgM0AD27EGIJqctHS2_N7dL05eKq3deOnsxdN_GhFkMU2idot87JxkN3IIoPo0q2NjmTQtoHKBsMLN-Q0U-v0xXQh4Au_a6mVD3YjOoLGIDbK6h3v8iqxIxdcFYgZgnn8uVbrJC4bJaxasEk6NgNzKB8YNn48jW1MV71vbOCnOrsf5FWk0uLYVvXhMfavZY" alt="Capa do livro">
+          <p>O Segredo da Empregada </p>
+          <div class="autor">Freida Mcfadden</div>
+<div class="autor">Achar alguém que não faça mil perguntas sobre a vida – e o passado – de uma candidata a empregada costuma ser praticamente impossível. Por isso Millie mal consegue acreditar quando Douglas Garrick a contrata.
+
+O plano dela é trabalhar na casa da família por um período curto, de preferência sem atrair nenhuma atenção, até alcançar seu objetivo maior.
+
+Só que, enquanto ela passa os dias limpando a cobertura deslumbrante e preparando pratos requintados para o casal, a Sra. Garrick nunca sai do quarto. Na verdade, as duas não foram sequer apresentadas. E Millie tem certeza de que já a ouviu chorando...</div>
+          <button class="btn-baixar" onclick="mostrarAnuncio(this, 'https://drive.google.com/file/d/1j4pfuDaeZvq9Y5msLuD4qXdb87N9yECy/view?usp=drivesdk')">Baixar</button>
+        </div>
+    <div class="livro">
+          <img src="https://blogger.googleusercontent.com/img/a/AVvXsEgJAGfzFC6uCtTivgloV2oXYzsCGpx229aSDPHu32F0JiJDgMWhDI8MlgSEd2JQgsncZSZ5MJB956cDN0Nhgus8QiV99bQXuZzRu76JYqspqyC3DXSVl-pNEKYpvvNULs4OgExeaHWkFESG-XzignHWXa9j_dMtzF4TBq5Sfj2yarFNedpr_ZzrMaaZidNV" alt="Filme 4">
+          <p>A empregada está de olho </p>
+          <div class="autor">Freida Mcfadden</div>
+      <div class="autor">Acostumada a limpar a casa dos outros, Millie mal consegue acreditar que agora esta realmente pertence a ela. A cozinha charmosa, a tranquila rua sem saída, o quintal enorme. Ela e o marido, Enzo, economizaram por muitos anos para poder dar aos dois filhos a vida que eles merecem.
+
+Como nada é perfeito, assim que ela conhece a Sra. Lowell, sua nova vizinha, a mulher a deixa desconfortável com suas críticas disfarçadas de elogios e a intimidade forçada com que trata Enzo. Mas, ao receber um convite dela para jantar, Millie tem a oportunidade perfeita para desfazer a má impressão.. </div>
+          <button class="btn-baixar" onclick="mostrarAnuncio(this, 'https://drive.google.com/file/d/1j4pfuDaeZvq9Y5msLuD4qXdb87N9yECy/view?usp=drivesdk')">Baixar</button>
+          </div>
+          <div class="livro">
+          <img src="https://blogger.googleusercontent.com/img/a/AVvXsEjXL4h4F7kyQGYcCkRXNg91PVW6d7DG8R_kCe4BEXYfgBiSQCv95fHI4NHwangw01U9sRpmrx05iW8QA_roHCbG4lixzTe-pxxTNuRhMpM5H-gQEcF87V-KjUA9LIGBTtmzaBSIVtVTUs14tWhNCRGsU9WQ9UGyl4qPLNHDaFT4IJO55aJJIBSKjlKA_VvP" alt="Filme 4">
+          <p>O Casamento da Empregada </p>
+          <div class="autor">Freida Mcfadden</div>
+            <div class="autor">Millie, a protagonista, está prestes a se casar com o homem de seus sonhos, mas um segredo obscuro de seu passado e uma pessoa com intenções sinistras ameaçam seu futuro. A cerimônia está marcada, os votos serão ditos, mas um obstáculo inesperado surge, colocando em risco a felicidade de Millie. Alguém não quer que Millie chegue ao altar e está disposta a tudo para impedir que o casamento aconteça. A empregada, com sua inteligência e determinação, precisará usar todas as suas habilidades para desvendar a trama e proteger seu grande dia. </div>
+          <button class="btn-baixar" onclick="mostrarAnuncio(this, 'https://drive.google.com/file/d/1j4pfuDaeZvq9Y5msLuD4qXdb87N9yECy/view?usp=drivesdk')">Baixar</button>
+          </div>
+                
+          <div class="livro">
+          <img src="https://blogger.googleusercontent.com/img/a/AVvXsEgDU19xLGdTL92uyRPNp7Whmg0rurTl5E2FulcDi3Hg5_FVMNh5k8EQX8G2mFaJoYExFXoH-LB9bsvqAHpTvkhabQhDfDWzJDLl0FVRCERDGhh2nF0qQhtlORNTtuYFXhL8aifRaxlJ0d-fqSVcLUL4qsdbkp2bIjamKHWwWisdPuZKfDCjuKUmIrnfq1eQ" alt="Filme 4">
+          <p>Até o Último de Nós</p>
+          <div class="autor">Freida Mcfadden</div>
+            <div class="autor"> Claire, enfrentando problemas no casamento, decide embarcar em uma viagem com o marido e dois casais de amigos para uma pousada isolada. A viagem, que deveria ser um momento de reconciliação e descanso, se transforma em um pesadelo quando o carro quebra em uma estrada de terra, deixando-os sem sinal de celular. Sem opções, eles decidem seguir a pé pela mata, mas a floresta se revela um lugar traiçoeiro, e logo um a um dos amigos começa a desaparecer. A tensão aumenta à medida que eles tentam descobrir quem ou o que está por trás dos desaparecimentos... </div>
+          <button class="btn-baixar" onclick="mostrarAnuncio(this, 'https://drive.google.com/file/d/1j4pfuDaeZvq9Y5msLuD4qXdb87N9yECy/view?usp=drivesdk')">Baixar</button>
+          </div>
+                
+        
+          
+<div class="livro">
+          <img src="  https://blogger.googleusercontent.com/img/a/AVvXsEh2N1asdG9EsEQzmlk7fJ2_x5QhQvxIupodX0KkZkXR_sVZSzOAQhF6RNZY666L8jYGU7-TLp1LrUtoVa1D1m3wxQeXAXj2QgyVxDzJ3PeJQSBKzQvPoT58IBHgaid_1HEDIHJ_JTZTgvIn8ldb2nzwksCD_tHftvYgJ1ynDNO-fKA4-Q_YuchIh0bhQuVB" alt="Filme 4">
+          <p>A Professora</p>
+          <div class="autor">Freida Mcfadden</div>
+  <div class="autor">Eve leva uma vida aparentemente tranquila como professora de matemática em uma escola de ensino médio. Seu marido, Nate, também é professor na mesma escola. No entanto, um escândalo envolvendo um caso entre uma aluna, Addie, e um professor abalou a escola. Embora o caso tenha sido resolvido com a demissão do professor, Eve sente que há mais nessa história e que Addie não é confiável. Addie, por sua vez, é vista como uma manipuladora que causa problemas e destrói vidas. Porém, ninguém conhece os verdadeiros segredos que Addie esconde, e ela fará de tudo para mantê-los em segredo. </div>
+          <button class="btn-baixar" onclick="mostrarAnuncio(this, 'https://drive.google.com/file/d/1j4pfuDaeZvq9Y5msLuD4qXdb87N9yECy/view?usp=drivesdk')">Baixar</button>
+          </div>
+  
+                  
+<div class="livro">
+          <img src="  https://blogger.googleusercontent.com/img/a/AVvXsEiolg5COXyJ6pF6mXtAak9SmqKi5UFA3cKMI3lV0LdYLbKsIohS7RYrFB3Z7ypfNVZIeATMMkVtPM2fad6BxVsRPr_2bwLG21yTCVYa9nnPeEyW6Xbt62fp9RkASZ0wQW1akUQiuAE77HUShWaNRxADVlsYg0Qf4P4jj4pxT1uFzIuqFchCGlFzCpr5dqVt" alt="Filme 4">
+          <p>O Detento</p>
+          <div class="autor">Freida Mcfadden</div>
+    <div class="autor">"O Detento" de Freida McFadden, descreve a história de Brooke Sullivan, uma enfermeira que começa a trabalhar em uma prisão de segurança máxima. Ela logo aprende três regras cruciais: tratar todos os detentos com respeito, nunca revelar informações pessoais e nunca ser excessivamente simpática. No entanto, Brooke já quebrou todas essas regras, pois tem uma conexão íntima com Shane Nelson, um dos detentos mais perigosos da prisão. Shane, que cumpre pena por assassinatos, guarda um segredo obscuro sobre o passado de Brooke. </div>
+          <button class="btn-baixar" onclick="mostrarAnuncio(this, 'https://drive.google.com/file/d/1j4pfuDaeZvq9Y5msLuD4qXdb87N9yECy/view?usp=drivesdk')">Baixar</button>
+          </div>
+                
+                  
+<div class="livro">
+          <img src="  https://blogger.googleusercontent.com/img/a/AVvXsEgFn3lIMhRa4CJD2kOA4E1PVAOGKkrJmMjywbsKtPSd0ui4qXgoyQd09VzLYWJh5UNcCLsEoWxvQ2fjnJ1Y4lKrxRMzm85n7ax5HaWc4TN1Bh7ZJ1Q5YGBByvRS2Gd2eLdLP6txrx9R1d9Mp3HcKbQyDolW2RgJxpsW46TUIVf8WZZ7HckPg8U-m0Abg4je" alt="Filme 4">
+          <p>O Escritório</p>
+          <div class="autor">   Freida Mcfadden </div>
+    <div class="autor"> DUAS MULHERES. UM ESCRITÓRIO. MUITOS SEGREDOS.
+Dawn Schiff é uma mulher estranha. Pelo menos, é o que toda a gente pensa na Vixed, a empresa de suplementos nutricionais onde trabalha como contabilista. Dawn nunca diz a coisa certa. Não tem amigos. E senta-se todos os dias à secretária, para trabalhar, precisamente às 8h45 da manhã.
+
+Talvez seja por isso que, certa manhã, quando Dawn não aparece para trabalhar, a sua colega Natalie Farrell – bonita, popular e a melhor vendedora da empresa há cinco anos consecutivos – se surpreenda. E mais ainda quando o telefone de Dawn toca e alguém do outro lado da linha diz apenas «Socorro». </div>
+          <button class="btn-baixar" onclick="mostrarAnuncio(this, 'https://drive.google.com/file/d/1j4pfuDaeZvq9Y5msLuD4qXdb87N9yECy/view?usp=drivesdk')">Baixar</button>
+          </div>
+                
+                  
+<div class="livro">
+          <img src="  https://blogger.googleusercontent.com/img/a/AVvXsEiN0WBehNtRA4Q6QtxF_hMUfsN28tJvpflSXNA9uoPW1-tFT_HsCsV3BOXYvt1-C5L4P2rNrlBo1vMhWhtwdwV49E68a2abqnicflnO66ovgCo4koHoXg8YVkCwA56XIHqIB57s54QwXtSMxYGW0TK-qsEh3ytdrswH3Z2ro2i_qil57w7BP0WnvP9hFcCn" alt="Filme 4">
+          <p>O Recluso</p>
+          <div class="autor">Freida Mcfadden</div>
+    <div class="autor">Há três regras capitais que Brooke deve seguir quando é contratada como técnica de enfermagem de um estabelecimento prisional masculino de segurança máxima: 1.ª Tratar todos os prisioneiros com respeito. 2.ª Não partilhar quaisquer informações pessoais. 3.ª Nunca desenvolver intimidade com nenhum dos reclusos.
+
+O que ninguém na prisão sabe é que Brooke já quebrou as regras. Um dos reclusos mais perigosos é um ex-namorado seu: Shane Nelson, a estrela de futebol americano do tempo da escola e o autor de uma série de assassínios horríveis. Ele foi condenado a passar a vida atrás das grades...</div>
+          <button class="btn-baixar" onclick="mostrarAnuncio(this, 'https://drive.google.com/file/d/1j4pfuDaeZvq9Y5msLuD4qXdb87N9yECy/view?usp=drivesdk')">Baixar</button>
+          </div>
+                
+                  
+<div class="livro">
+          <img src="https://blogger.googleusercontent.com/img/a/AVvXsEhXaxqsnXhi_W4kXDgkhsohL5e7RdysHAPGTge90EmR_q85zlCp3-mzTZyt6s0sgYrqgmjL_2hEc3hbMYO5LhVYtJLX4GHaUmxox8bHATryPrDSJI9LgY2FUVvo_LI9jM9dkee1One6iz5m35d7YJO5dpsGAClmdV49jJ46FVd2O12HDGOiSBW0A_NGq3Oq" alt="Filme 4">
+          <p>ALA D</p>
+          <div class="autor">Freida Mcfadden</div>
+  <div class="autor">A sinopse do livro "Ala D", de Freida McFadden, gira em torno de Amy Brenner, uma estudante de medicina que se vê obrigada a passar uma noite na Ala D, uma unidade psiquiátrica fechada. Amy evita esse turno há muito tempo devido a um medo profundo e pessoal, que ela não pode revelar. Durante sua ronda noturna, ela ouve um barulho suspeito vindo de um dos quartos, como se alguém estivesse tentando arrombar a porta. À medida que as horas passam, pacientes e funcionários começam a desaparecer, e Amy percebe que algo terrível está acontecendo na Ala D, colocando todos em perigo, inclusive ela... </div>
+          <button class="btn-baixar" onclick="mostrarAnuncio(this, 'https://drive.google.com/file/d/1j4pfuDaeZvq9Y5msLuD4qXdb87N9yECy/view?usp=drivesdk')">Baixar</button>
+          </div>
+  
+<div class="livro">
+          <img src="https://blogger.googleusercontent.com/img/a/AVvXsEhru8Sm67nYzV1sugc5bh102dQF-NeTauWLeZuEas_qRbdkgNt92Vah9G-jET0gOQa3VT84bFXOWc29cEExO_sP12xxa43nE1kBazuWqbRTUBQH0AISYWzKjpCxhfglzreyrEst_Y6J7_l9B9T39tVRQ6Kgix2lyrcjykLFzc72Re5GiLLHiTg2XMqcEK3l" alt="Filme 4">
+          <p>Não Incomodar </p>
+          <div class="autor">Freida Mcfadden</div>
+            <div class="autor">Quinn Alexander cometeu um crime impensável. Para evitar passar a vida na prisão, foge. Deixa para trás a sua casa, o seu trabalho e a sua família. Pega no passaporte e ruma à fronteira antes que a polícia descubra o que ela fez. 
+
+Mas, quando uma inesperada tempestade de neve a leva a sair da estrada e a parar no meio do nada, Quinn é obrigada a refugiar-se no tranquilo e isolado Motel Baxter. O edifício está deteriorado e a precisar de uma remodelação, mas Nick, o bonito e atencioso proprietário, disponibiliza-lhe um dos quartos por um preço simpático para ela pernoitar ali, ao abrigo da tempestade.</div>
+          <button class="btn-baixar" onclick="mostrarAnuncio(this, 'https://drive.google.com/file/d/1j4pfuDaeZvq9Y5msLuD4qXdb87N9yECy/view?usp=drivesdk')">Baixar</button>
+          </div>
+                
+<div class="livro">
+          <img src="https://blogger.googleusercontent.com/img/a/AVvXsEhmDm-u2PTxdUobedanpIVid6-P7OUrNkUksx1J3tp0Uf7IHaMO34DCwRqUxo_ekq819j_AIBVyDtsT5OMgJXx9J0pf1J_SMdjeSrHsRBB-WO7cYaX-FLSvhS_7egU1WvSCJmFMkabWVZ5ONCpL0q-hMKGU4BtI1ZtSeeBmDmTY8RQC1kAx7XNAC0oU_Fwb" alt="Filme 4">
+          <p>A Mulher do andar de cima </p>
+          <div class="autor">Freida Mcfadden</div>
+  <div class="autor">A sinopse de "A Mulher do Andar de Cima" narra a história de Victoria Barnett, que, após um grave acidente, fica incapacitada de falar e andar, presa em seu próprio corpo. Sua vida aparentemente perfeita com o marido, Adam, desmorona quando Sylvia Robinson é contratada como sua enfermeira particular. Sylvia começa a suspeitar que há algo sombrio na mansão isolada e no comportamento de Adam, enquanto os olhos de Victoria parecem tentar lhe dizer algo. Sylvia precisa descobrir a verdade por trás da aparente tragédia antes que seja tarde demais. </div>
+          <button class="btn-baixar" onclick="mostrarAnuncio(this, 'https://drive.google.com/file/d/1j4pfuDaeZvq9Y5msLuD4qXdb87N9yECy/view?usp=drivesdk')">Baixar</button>
+          </div>
+  
+<div class="livro">
+          <img src="https://blogger.googleusercontent.com/img/a/AVvXsEgbhFPqr7Vvcyz97n4ga0TxW4o8P6IEzAGo2eDJnNT_CJRPWGSkOTrqQ6puZcmHfWpTxoAfmxLTOgYMxAoABCeK9Jeg8emHzDBR_WuqQCcJJXG5OD6bv2JJvAqYs58VRzHnnLHpA-u4cKbWZnX4ubPpztP-iT0p9uMhEsi05fIXWtRxBgX4CCozCWW1AtkV" alt="Filme 4">
+          <p>A Porta Trancada</p>
+          <div class="autor">Freida Mcfadden</div>
+  <div class="autor">Nora, uma cirurgiã de sucesso, tenta levar uma vida tranquila e discreta, longe do estigma de ser filha de um assassino em série. No entanto, uma série de assassinatos com o mesmo modus operandi do seu pai a colocam no centro das atenções, e ela se torna a principal suspeita do detetive Barber. 
+A trama se desenrola com a descoberta de que alguém está tentando incriminá-la, usando o seu passado e os métodos do seu pai como arma. Nora precisa lutar para provar sua inocência e desvendar quem está por trás desses novos crimes,enquanto lida com a desconfiança da polícia e a pressão de um passado que insiste em assombrá-la. </div>
+          <button class="btn-baixar" onclick="mostrarAnuncio(this, 'https://drive.google.com/file/d/1j4pfuDaeZvq9Y5msLuD4qXdb87N9yECy/view?usp=drivesdk')">Baixar</button>
+          </div>
+  
+                
+<div class="livro">
+          <img src="https://blogger.googleusercontent.com/img/a/AVvXsEjho568iEfNxcpd720uTP855gjWA3pSOUtjJiQpsGbh7bv3FCy-sEUVCAqE8wEPPNCZt8vChXG6vsIFsLmBrnaPhaOFUBNh2Q5vG4k2b7RxhsQ4Wym8sCUlWnBdhPVHpd7qc-14C4jJg4lyzn8uDPcJ0nMii_eye8YrBHSI5rL9cCecwoeUUitDoDmnQQY-" alt="Filme 4">
+          <p>O acidente </p>
+          <div class="autor">Freida Mcfadden</div>
+  <div class="autor">Tegan tem 23 anos, está grávida de oito meses e precisa, desesperadamente, deixar para trás uma vida marcada por dor e sofrimento. Então, na primeira oportunidade, não hesita em pegar a estrada para passar um tempo com o irmão até decidir o próximo passo, mas ela não tem noção de que está dirigindo em direção a uma tempestade de neve. Ela não chega ao seu destino, pois bate com o carro em uma árvore.
+
+Isolada em uma área rural do Maine, com um tornozelo possivelmente quebrado e sem sinal de celular, Tegan teme que esse tenha sido o maior erro de sua vida. No entanto, um milagre acontece: ela é resgatada por um casal que lhe oferece um quarto em sua casa até a nevasca passar.
+
+Porém, há algo estranho...</div>
+          <button class="btn-baixar" onclick="mostrarAnuncio(this, 'https://drive.google.com/file/d/1j4pfuDaeZvq9Y5msLuD4qXdb87N9yECy/view?usp=drivesdk')">Baixar</button>
+          </div>
+  
+                
+<div class="livro">
+          <img src="https://blogger.googleusercontent.com/img/a/AVvXsEgEpEOSW8CbmHDS8k_SJFwND2r-LAbO4EvEuwm-d_gJkk4kuZA0GzJBM2UzP9MqBrdMjcqoiUcLIkBfhqLQwhTq4o09PL5bHWRIeAqRqnBAc9AiLMlRs3JIE54nf-6at4FEHutfWVTuClv9Q7gd9_SU9Zie1RZcOZrQ-fjHep1K6OmuKhAXu9VsPoKjC55Q" alt="Filme 4">
+          <p>O Namorado</p>
+          <div class="autor">Freida Mcfadden</div>
+            <div class="autor">O Namorado" (The Boyfriend) é um livro de suspense psicológico da autora Freida McFadden. A história acompanha Sydney, uma mulher em busca do amor que encontra Tom, um homem perfeito que parece ser tudo o que ela sempre quis. No entanto, uma série de assassinatos de mulheres que também estavam em relacionamentos online começa a assombrar a cidade, e Sydney se vê questionando se Tom é realmente quem diz ser. </div>
+          <button class="btn-baixar" onclick="mostrarAnuncio(this, 'https://drive.google.com/file/d/1j4pfuDaeZvq9Y5msLuD4qXdb87N9yECy/view?usp=drivesdk')">Baixar</button>
+          </div>
+  
+                
+                
+                
+        </div>
+    </section>
+
+    <section class="carrossel">
+      <h2>Talvez você goste</h2>
+      <div class="livros-container">
+        <div class="livro">
+          <img src="https://blogger.googleusercontent.com/img/a/AVvXsEjrljrbKhauYfp43zKuovfRiSm-0NeOw3QanjgAK6ILSfkXEcWEJPslR1y8NyOkigcvSG_s4dksa5dcHBOXKTQwE5X9M4R9Qh6W133-XZz1Jfy-_Mpo9M373hAUNw34slCJrDqflb7WuJ57AMUvIeFLfi9_oymzwrh1e1SCiZPHIPPy0XMDBN_-RDRRk8BB" alt="Filme 1">
+          <p>Lady Killers: Assassinas em Série</p>
+          <div class="autor">Tori Telfer</div>
+           <div class="autor">Lady Killers: Assassinas em Série" é um livro da escritora Tori Telfer que explora histórias de mulheres que cometeram crimes violentos, desafiando a ideia de que assassinos em série são predominantemente homens. A obra apresenta casos de mulheres que agiram por motivos diversos, como vingança, ganância, ou até mesmo sob pressão social, desconstruindo estereótipos sobre a natureza feminina e a violênciaLady Killers" não romantiza os crimes, mas oferece uma análise aprofundada das motivações e das circunstâncias que levaram essas mulheres a matar, mostrando que a violência não é exclusiva de um gênero. </div>
+          <button class="btn-baixar" onclick="mostrarAnuncio(this, 'https://drive.google.com/file/d/1j4pfuDaeZvq9Y5msLuD4qXdb87N9yECy/view?usp=drivesdk')">Baixar</button>
+        </div>
+        <div class="livro">
+          <img src="https://blogger.googleusercontent.com/img/a/AVvXsEgZ0QJ5o0fqtB0H2Uu_-rVe18R_YQqpjgkB6zZYPmON937LaEHPvfSvtJSHxOFQuml9ppM4zGkwjYV2tR9xls1FYkqlAt4AphmeUOo4Cw5nYUqVqFyZppEEU2fTLW2BN58ihPqUN6IV9ph-pFSYBllwKKUXRpTu5DsyiuaoqaMkrVQc6tZCjrOABHXdJKna" alt="Filme 2">
+          <p>Fim de jogo </p>
+          <div class="autor">Daniel Cole</div>
+          <div class="autor">Um quarto trancado. Um cadáver. Um segredo comprometedor.
+
+O suposto suicídio do policial aposentado Finlay Shaw tira o controverso detetive William Fawkes, conhecido por todos como Wolf, de seu isolamento autoimposto.
+
+Enquanto tenta se defender de uma condenação pelos crimes praticados durante o caso Boneco de Pano, Wolf se lança numa corrida contra o tempo para chegar à verdade sobre a morte do amigo.
+
+Mal sabe ele que está lidando com questões do passado do policial aposentado que ameaçam pessoas poderosas dentro da própria corporação.
+
+Apenas uma força-tarefa unida pelos laços de amizade com Finlay será capaz de solucionar o mistério. Isso se seus integrantes chegarem vivos ao final...</div>
+          <button class="btn-baixar" onclick="mostrarAnuncio(this, 'https://drive.google.com/file/d/1j4pfuDaeZvq9Y5msLuD4qXdb87N9yECy/view?usp=drivesdk')">Baixar</button>
+        </div>
+        
+        <div class="livro">
+          <img src="https://blogger.googleusercontent.com/img/a/AVvXsEh6RlQtXH1atFfYm_BEXGisvLf0xGPyjn1Voh4zn2lvOmZnrarpKNvssNsGzTDtcrhuhoJWg9cMwiCAspNaL6PsAxnBMhy_ICVpVqlNs3zqaMjCszcanZyhrjdYWxMY0GCg60JRRy7YYo6rtKFLFmsQnOg3IX1zhgiR1A06Shn3REzmGnP4zMg2IC8RVPch" alt="Filme 2">
+          <p>BTK-Máscara da maldade</p>
+          <div class="autor">Autor:WENZL, ROY | POTTER, TIM | LAVIANA, HURST | KELLY, L.</div>
+          <div class="autor">Ao longo de três décadas, um monstro aterrorizou os moradores de Wichita, Kansas. Um assassino em série que amarrava, torturava e matava mulheres, homens e crianças, iludiu a polícia por anos a fio enquanto se vangloriava de suas terríveis façanhas para a mídia. A nação ficou chocada quando os crimes de BTK — a sigla para os termos em inglês bind, torture, kill, que eram sua assinatura criminosa — foram enfim associados a Dennis Rader, um vizinho amigável, marido devoto e respeitado presidente da congregação de uma igreja local. O jornal Wichita Eagle fez a cobertura do assassino em série desde seu primeiro ataque, em janeiro de 1974...</div>
+          <button class="btn-baixar" onclick="mostrarAnuncio(this, 'https://drive.google.com/file/d/1j4pfuDaeZvq9Y5msLuD4qXdb87N9yECy/view?usp=drivesdk')">Baixar</button>
+        </div>
+        
+          <div class="livro">
+          <img src="https://blogger.googleusercontent.com/img/a/AVvXsEjAXHaOXaanlE-Gxi1eWuvX7ApjIgFufcCpTJYKnsINyhPKqzYsaFb1S_IzNBhXdQZyHz6xkyX3W9R9Wn9hAiT31vrbetweZ3cjS5rBMa86E8kS1_TcBIrzC33QUG04Iiaie4Wjc5krEV-7XCXciz6LR9RFzK9H3Apodhz2qUoh3mocTLDM71L8guKYObH6" alt="Filme 2">
+          <p>Velocidade Fatal</p>
+          <div class="autor">por Diretor B</div>
+          <button class="btn-baixar" onclick="mostrarAnuncio(this, 'https://drive.google.com/file/d/1j4pfuDaeZvq9Y5msLuD4qXdb87N9yECy/view?usp=drivesdk')">Baixar</button>
+        </div>
+        
+    <div class="livro">
+          <img src="https://blogger.googleusercontent.com/img/a/AVvXsEgWv1LszaMPRttowDVaF4iZtCeVSU72M8ROZNBngAvkzFak4nnI6RJhPAFOKfsBMDSZI0ju9_ACaX1f9PwIWlBexs3wBe1HQXtzdpvfYtNdJUB8WHqugnk_lwQpez9DxoJBmnZbl_zMIEcJSN1DZMSwNgO5cHhl5QBgvR0m0RCo8A0MqL-rfXR6fvh3ScAq" alt="Filme 2">
+          <p>Velocidade Fatal</p>
+          <div class="autor">por Diretor B</div>
+          <button class="btn-baixar" onclick="mostrarAnuncio(this, 'https://drive.google.com/file/d/1j4pfuDaeZvq9Y5msLuD4qXdb87N9yECy/view?usp=drivesdk')">Baixar</button>
+        </div>
+        
+            <div class="livro">
+          <img src="https://blogger.googleusercontent.com/img/a/AVvXsEh0G3SWYe_Juhgm2yMWIO1cj1X4amYvGZVpavEt2LGcxNq6BkjFjL-GpEDuPMYFOHDiiNjXivGr8Bo1f3e2Z4WdXCjSU9gLFi1NJSGhn3twUjGyZEeklOUfiQ_sK6Bl9qvyouW0MaDmcjI6Uq81itspMdA3JrvzdFkFhg2FombCC1V-boet2WfUSG3pQe0U" alt="Filme 2">
+          <p>Velocidade Fatal</p>
+          <div class="autor">por Diretor B</div>
+          <button class="btn-baixar" onclick="mostrarAnuncio(this, 'https://drive.google.com/file/d/1j4pfuDaeZvq9Y5msLuD4qXdb87N9yECy/view?usp=drivesdk')">Baixar</button>
+        </div>
+        
+
+        
       </div>
-    </div>
+    </section>
 
-    <h2>Aventura</h2>
-    <div class="carousel">
-      <div class="card">
-        <img src="https://via.placeholder.com/200x300?text=Ilha+do+Tesouro" alt="Capa Ilha do Tesouro" />
-        <h3>A Ilha do Tesouro</h3>
-        <div class="author">Robert Louis Stevenson</div>
-        <p>Um jovem embarca em uma perigosa jornada em busca de um tesouro pirata.</p>
-        <button class="btn-anuncio" onclick="mostrarAnuncio(this)">🎬 Assistir anúncio para baixar</button>
-        <div class="ad-container"></div>
+    <section class="carrossel">
+      <h2>Filmes de Comédia</h2>
+      <div class="livros-container">
+        <div class="livro">
+          <img src="https://blogger.googleusercontent.com/img/a/AVvXsEg_mePNwNfmN-BIo0SjESZatpuzfoQ5tYMbKuZy9WB33WmzhFVEC2l-Qpv1rEZoXEmergzCsPpTrx4ft7fDD6Fx9Q5buyBXNr3OW1qIK6MDk5p53VsDU35feYNQssVVZ0mj1brSFNrpnbZWJaakao37BoIgrfNniyL8RK9uaHmA4YSloL_saZnMS7ixSVQ9" alt="Filme 3">
+          <p>Riso Solto</p>
+          <div class="autor">por Diretor C</div>
+          <button class="btn-baixar" onclick="mostrarAnuncio(this, 'https://drive.google.com/file/d/1j4pfuDaeZvq9Y5msLuD4qXdb87N9yECy/view?usp=drivesdk')">Baixar</button>
+        </div>
+        <div class="livro">
+          <img src="https://blogger.googleusercontent.com/img/a/AVvXsEj-RcUx4Uxvu7RC6iY8MtzP6zVTHwYdLIc1k42S8u6NiQEES9g_nLCsPw9zuUIuXkO437wGGUM3uRqbnWjeJBcKot8Tu8bMFpzuGA2_i6l2jc8C72upnXxycbE8WKfxyFuxX0PFGfruCcJH1q-60sCuM4u2Rd1ooEm5jvhc83vjm46LrOPXQDDF_okQmA7m" alt="Filme 4">
+          <p>Confusão em Dobro</p>
+          <div class="autor">por Diretor D</div>
+          <button class="btn-baixar" onclick="mostrarAnuncio(this, 'https://drive.google.com/file/d/1j4pfuDaeZvq9Y5msLuD4qXdb87N9yECy/view?usp=drivesdk')">Baixar</button>
+          </div>
+            <div class="livro">
+          <img src="https://blogger.googleusercontent.com/img/a/AVvXsEj-RcUx4Uxvu7RC6iY8MtzP6zVTHwYdLIc1k42S8u6NiQEES9g_nLCsPw9zuUIuXkO437wGGUM3uRqbnWjeJBcKot8Tu8bMFpzuGA2_i6l2jc8C72upnXxycbE8WKfxyFuxX0PFGfruCcJH1q-60sCuM4u2Rd1ooEm5jvhc83vjm46LrOPXQDDF_okQmA7m" alt="Filme 4">
+          <p>Confusão em Dobro</p>
+          <div class="autor">por Diretor D</div>
+          <button class="btn-baixar" onclick="mostrarAnuncio(this, 'https://drive.google.com/file/d/1j4pfuDaeZvq9Y5msLuD4qXdb87N9yECy/view?usp=drivesdk')">Baixar</button>
+          </div>
+       
       </div>
-    </div>
+    </section>
 
-    <div class="ads-footer">
-      <!-- Anúncio rodapé -->
-      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-      <ins class="adsbygoogle" style="display:block"
-           data-ad-client="ca-pub-XXXXXXXXXXXX"
-           data-ad-slot="AAAAAAAAAAAA"
-           data-ad-format="auto"
-           data-full-width-responsive="true"></ins>
-      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    <div id="anuncio" class="anuncio">
+      <p>🔔 Assista ao anúncio para liberar o download...</p>
+      <div class="anuncio-ad">
+        <!-- COLE SEU CÓDIGO DE ANÚNCIO AQUI -->
+        <ins class="adsbygoogle"
+          style="display:block"
+          data-ad-client="ca-pub-XXXXXXXXXXXXXX"
+          data-ad-slot="1234567890"
+          data-ad-format="auto"
+          data-full-width-responsive="true"></ins>
+      </div>
+      <p id="contador">5</p>
+      <p style="margin-top: 10px; font-size: 0.9rem; color: #ccc;">
+        Após clicar em baixar, será solicitado um e-mail para envio do arquivo. Garantimos total segurança e respeito à sua privacidade.
+      </p>
     </div>
-  </div>
+  </main>
+
+  <!-- Script do Google AdSense -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+
+  <script>
+    window.onload = () => {
+      const btnTema = document.getElementById("btnTema");
+      if (btnTema) {
+        btnTema.addEventListener("click", () => {
+          document.body.classList.toggle("light");
+          btnTema.textContent = document.body.classList.contains("light") ? "🌙" : "☀️";
+        });
+      }
+    };
+
+    function mostrarAnuncio(botao, link) {
+      const anuncio = document.getElementById("anuncio");
+      const contador = document.getElementById("contador");
+      let tempo = 5;
+      anuncio.style.display = "block";
+      botao.disabled = true;
+      const intervalo = setInterval(() => {
+        tempo--;
+        contador.textContent = tempo;
+        if (tempo === 0) {
+          clearInterval(intervalo);
+          anuncio.innerHTML = '<p>✅ Download liberado! <a href="' + link + '" target="_blank" style="color:yellow;font-weight:bold" onclick="fecharAnuncio()">Clique aqui para baixar</a></p><p style="margin-top: 10px; font-size: 0.9rem; color: #ccc;">Após clicar em baixar, será solicitado um e-mail para envio do arquivo. Garantimos total segurança e respeito à sua privacidade.</p>';
+        }
+      }, 1000);
+    }
+
+    function fecharAnuncio() {
+      document.getElementById("anuncio").style.display = "none";
+    }
+
+    function pesquisarLivros() {
+      const termo = document.getElementById("pesquisa").value.toLowerCase();
+      const livros = document.querySelectorAll(".livro");
+      livros.forEach((livro) => {
+        const texto = livro.innerText.toLowerCase();
+        livro.style.display = texto.includes(termo) ? "block" : "none";
+      });
+    }
+  </script>
 </body>
 </html>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <section id="sobre" style="padding: 30px; background-color: var(--bg-color); color: var(--text-color); font-family: Arial, sans-serif;">
+  <h2 style="font-size: 24px; margin-bottom: 10px;">📚 Sobre Mim</h2>
+  <p style="font-size: 16px; line-height: 1.6;">
+    Bem-vindo à <strong>Biblioteca Virtual</strong>! Este site foi criado com dedicação para disponibilizar livros gratuitos de forma legal, acessível e segura. Todos os livros aqui oferecidos estão em domínio público, foram cedidos por seus autores ou estão autorizados para distribuição gratuita. 
+  </p>
+  <p style="font-size: 16px; line-height: 1.6;">
+    Nosso objetivo é incentivar a leitura, promover o acesso à cultura e facilitar o contato com obras literárias de qualidade. Não cobramos por nenhum livro e não infringimos nenhum direito autoral. Acreditamos que o conhecimento deve ser livre e acessível a todos.
+  </p>
+  <p style="font-size: 16px; line-height: 1.6;">
+    Caso você seja autor ou detentor de direitos de alguma obra disponibilizada aqui e deseje que ela seja removida, entre em contato conosco pelo e-mail informado na seção de contato. Respeitamos totalmente os direitos dos criadores.
+  </p>
+</section>
+
+<section id="politica" style="padding: 30px; background-color: var(--bg-color); color: var(--text-color); font-family: Arial, sans-serif;">
+  <h2 style="font-size: 24px; margin-bottom: 10px;">🔒 Política de Privacidade</h2>
+  <p style="font-size: 16px; line-height: 1.6;">
+    A sua privacidade é importante para nós. Esta Política de Privacidade descreve como suas informações pessoais são coletadas, usadas e protegidas quando você utiliza a <strong>Biblioteca Virtual</strong>.
+  </p>
+
+  <h3 style="font-size: 18px; margin-top: 20px;">1. Coleta de Informações</h3>
+  <p style="font-size: 16px; line-height: 1.6;">
+    Podemos solicitar seu endereço de e-mail apenas para fins de envio dos livros solicitados e para mantê-lo informado sobre novidades e atualizações do site. Seu e-mail não será compartilhado com terceiros, vendido ou utilizado para spam.
+  </p>
+
+  <h3 style="font-size: 18px; margin-top: 20px;">2. Uso de Cookies</h3>
+  <p style="font-size: 16px; line-height: 1.6;">
+    Utilizamos cookies e tecnologias semelhantes para melhorar sua experiência de navegação, exibir anúncios e entender melhor como você usa nosso site. Você pode desativar os cookies nas configurações do seu navegador, se preferir.
+  </p>
+
+  <h3 style="font-size: 18px; margin-top: 20px;">3. Anúncios e Terceiros</h3>
+  <p style="font-size: 16px; line-height: 1.6;">
+    Nosso site pode exibir anúncios de parceiros como o Google Ads. Esses serviços podem coletar dados anônimos para oferecer anúncios mais relevantes, mas nenhum dado sensível ou pessoal é compartilhado por nós.
+  </p>
+
+  <h3 style="font-size: 18px; margin-top: 20px;">4. Segurança das Informações</h3>
+  <p style="font-size: 16px; line-height: 1.6;">
+    Todas as informações fornecidas pelos usuários são armazenadas de forma segura e utilizadas apenas para os fins aqui descritos. Tomamos medidas para garantir que seus dados estejam protegidos contra acessos não autorizados.
+  </p>
+
+  <h3 style="font-size: 18px; margin-top: 20px;">5. Consentimento</h3>
+  <p style="font-size: 16px; line-height: 1.6;">
+    Ao utilizar nosso site, você concorda com esta Política de Privacidade e com os termos de uso aqui estabelecidos.
+  </p>
+
+  <h3 style="font-size: 18px; margin-top: 20px;">6. Alterações nesta Política</h3>
+  <p style="font-size: 16px; line-height: 1.6;">
+    Podemos atualizar esta política a qualquer momento. Recomendamos que você a revise periodicamente para estar ciente de possíveis mudanças.
+  </p>
+
+  <p style="font-size: 16px; margin-top: 20px;">
+    Se tiver dúvidas sobre esta política, entre em contato conosco.
+  </p>
+</section>
+  
+  
+  
+  
+  
+  <!-- Botão WhatsApp Profissional -->
+<a href="https://wa.me/SEUNUMERO?text=Olá!%20Gostaria%20de%20pedir%20um%20livro%20que%20ainda%20não%20está%20na%20Biblioteca%20Virtual." 
+   class="whatsapp-float" target="_blank" aria-label="Fale no WhatsApp">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="28" height="28" fill="white">
+    <path d="M16 .667C7.84.667 1.333 7.174 1.333 15.333c0 2.706.747 5.226 2.027 7.413L1 31l8.473-2.213a14.93 14.93 0 006.527 1.547c8.16 0 14.667-6.507 14.667-14.667C30.667 7.174 24.16.667 16 .667zm0 26.667a12.87 12.87 0 01-6.493-1.76l-.467-.267-5.013 1.313 1.333-4.92-.307-.48A12.65 12.65 0 013.333 15.333c0-6.994 5.673-12.667 12.667-12.667s12.667 5.673 12.667 12.667-5.673 12.667-12.667 12.667zm7.187-9.267c-.4-.2-2.36-1.173-2.727-1.307-.36-.133-.627-.2-.893.2s-1.027 1.307-1.28 1.573c-.24.267-.467.293-.867.1-.4-.2-1.693-.627-3.227-2-.92-.827-1.547-1.84-1.72-2.227-.18-.4-.02-.613.133-.813.133-.133.293-.347.44-.52.16-.173.213-.293.32-.48.107-.2.053-.373-.013-.52-.067-.133-.893-2.16-1.227-2.973-.32-.76-.647-.653-.893-.667h-.76c-.2 0-.52.067-.787.36-.267.293-1.04 1.013-1.04 2.467 0 1.453 1.067 2.853 1.213 3.053.16.2 2.107 3.227 5.107 4.513 1.787.773 2.493.84 3.4.707.547-.08 1.667-.68 1.9-1.333.24-.653.24-1.213.173-1.333-.067-.133-.36-.213-.76-.4z"/>
+  </svg>
+  <span class="tooltip-wpp">Peça um livro que ainda não está disponível</span>
+</a>
+
+<style>
+.whatsapp-float {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #25D366;
+  color: white;
+  border-radius: 50%;
+  width: 55px;
+  height: 55px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  z-index: 999;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  text-decoration: none;
+}
+
+.whatsapp-float:hover {
+  transform: scale(1.08);
+}
+
+.tooltip-wpp {
+  visibility: hidden;
+  width: 220px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px;
+  position: absolute;
+  right: 65px;
+  bottom: 12px;
+  font-size: 0.85rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  pointer-events: none;
+}
+
+.whatsapp-float:hover .tooltip-wpp {
+  visibility: visible;
+  opacity: 1;
+}
+</style>
